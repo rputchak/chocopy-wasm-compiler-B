@@ -1,4 +1,4 @@
-
+import { SourceLocation } from "./ast";
 export class CompileTimeError extends Error {
     __proto__: Error
     constructor(message?: string) {
@@ -12,8 +12,8 @@ export class CompileTimeError extends Error {
 
 // I ❤️ TypeScript: https://github.com/microsoft/TypeScript/issues/13965
 export class TypeCheckError extends CompileTimeError {
-    constructor(message?: string, line?: number) {
-     super("TYPE ERROR: " + message + " at line " + line.toString());
+    constructor(message?: string, location?: SourceLocation) {
+     super("TYPE ERROR: " + message + " in line " + location.line.toString()+" at column " + location.column.toString() +"\n"+location.srcCode);
    } 
  }
 
@@ -25,9 +25,9 @@ export class TypeCheckError extends CompileTimeError {
 
  export class ParseError extends CompileTimeError {
     __proto__: CompileTimeError 
-    constructor(message?: string, line?: number) {
+    constructor(message?: string, location?: SourceLocation) {
      const trueProto = new.target.prototype;
-     super("PARSE ERROR: " + message + " at line " + line.toString());
+     super("PARSE ERROR: " + message + " in line " + location.line.toString()+" at column " + location.column.toString() +"\n"+location.srcCode);
      this.__proto__ = trueProto;
    } 
  }

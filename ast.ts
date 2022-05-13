@@ -8,7 +8,7 @@ export type Type =
   | {tag: "class", name: string}
   | {tag: "either", left: Type, right: Type }
 
-export type SourceLocation = { line: number }
+export type SourceLocation = { line: number, column: number, srcCode: string }
 
 export type Parameter<A> = { name: string, type: Type }
 
